@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myroomapplication.database.Animals
 
 
 class AnimalsListAdapter :
@@ -43,7 +44,7 @@ class AnimalsListAdapter :
     companion object {
         private val WORDS_COMPARATOR = object : DiffUtil.ItemCallback<Animals>() {
             override fun areItemsTheSame(oldItem: Animals, newItem: Animals): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(oldItem: Animals, newItem: Animals): Boolean {
