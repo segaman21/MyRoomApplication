@@ -18,12 +18,4 @@ interface AnimalsDao {
     @Query("DELETE FROM animals_table")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM animals_table ORDER BY name")
-    fun getAllByName():Flow<List<Animals>>
-
-    @Query("SELECT * FROM animals_table ORDER BY age")
-    fun getAllByAge(): Flow<List<Animals>>
-
-    @Query("SELECT * FROM animals_table ORDER BY breed")
-    fun getAllByBreed(): Flow<List<Animals>>
 }
