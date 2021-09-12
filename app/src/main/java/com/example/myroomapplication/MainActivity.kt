@@ -1,73 +1,42 @@
 package com.example.myroomapplication
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.myroomapplication.database.Animals
+import com.example.myroomapplication.addNewAnimal.NewAnimalActivity
+import com.example.myroomapplication.databinding.ActivityMainBinding
 import com.example.myroomapplication.preference.PreferenceActivity
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
-
-    private var count = 1
-    private val newAnimalRequestCode = 1
     private val animalsViewModel: AnimalsViewModel by viewModels {
         ((application as AnimalsApplication).viewModelFactory)
     }
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
         val adapter = AnimalsListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        val button = findViewById<FloatingActionButton>(R.id.newAnimalButton)
-        button.setOnClickListener {
+        binding.recyclerview.adapter = adapter
+        binding.recyclerview.layoutManager = LinearLayoutManager(this)
+        binding.newAnimalButton.setOnClickListener {
             val intent = Intent(this, NewAnimalActivity::class.java)
-            startActivityForResult(intent, newAnimalRequestCode)
+            startActivity(intent)
         }
-
         animalsViewModel.allAnimals.observe(this, Observer { animals ->
             animals.let { adapter.submitList(it) }
         })
-
-        val deleteButton = findViewById<ImageView>(R.id.delete_button)
-        deleteButton.setOnClickListener {
+        binding.deleteButton.setOnClickListener {
             animalsViewModel.delete()
         }
-
-        val sortedButton = findViewById<ImageView>(R.id.sorted_button)
-        sortedButton.setOnClickListener {
+        binding.sortedButton.setOnClickListener {
             val settingsIntent = Intent(this, PreferenceActivity::class.java)
             startActivity(settingsIntent)
         }
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intentData)
-
-        if (requestCode == newAnimalRequestCode && resultCode == Activity.RESULT_OK) {
-            var name = intentData?.getStringExtra(NewAnimalActivity.NAME)
-            var age = intentData?.getStringExtra(NewAnimalActivity.AGE)
-            var breed = intentData?.getStringExtra(NewAnimalActivity.BREED)
-            val animal = Animals(name=name!!, age=age!!, breed=breed!!)
-            animalsViewModel.insert(animal)
-
-        } else {
-            Toast.makeText(applicationContext, "Aminals is empty", Toast.LENGTH_LONG).show()
-        }
-    }
-
 }

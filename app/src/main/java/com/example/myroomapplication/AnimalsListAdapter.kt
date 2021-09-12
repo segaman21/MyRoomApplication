@@ -8,35 +8,24 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myroomapplication.database.Animals
+import com.example.myroomapplication.databinding.AnimalItemBinding
 
 
 class AnimalsListAdapter :
     ListAdapter<Animals, AnimalsListAdapter.AnimalsViewHolder>(WORDS_COMPARATOR) {
 
-    class AnimalsViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        private val animalsName: TextView = itemView.findViewById(R.id.name_desc)
-        private val animalsAge: TextView = itemView.findViewById(R.id.age_desc)
-        private val animalsBreed: TextView = itemView.findViewById(R.id.breed_desc)
-
+    class AnimalsViewHolder(private val binding: AnimalItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(animals: Animals) {
-            animalsName.text = animals.name
-            animalsAge.text = animals.age.toString()
-            animalsBreed.text = animals.breed
-        }
-
-        companion object {
-            fun create(parent: ViewGroup): AnimalsViewHolder {
-                val view: View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.animal_item, parent, false)
-                return AnimalsViewHolder(view)
-            }
+            binding.nameDesc.text = animals.name
+            binding.ageDesc.text = animals.age
+            binding.breedDesc.text = animals.breed
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalsViewHolder {
-        return AnimalsViewHolder.create(parent)
+        val itemBinding = AnimalItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return AnimalsViewHolder(itemBinding)
     }
-
     override fun onBindViewHolder(holder: AnimalsViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
@@ -52,5 +41,4 @@ class AnimalsListAdapter :
             }
         }
     }
-
 }

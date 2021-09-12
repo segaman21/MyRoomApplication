@@ -15,5 +15,4 @@ class AnimalsRepository(private val animalsDao: AnimalsDao) {
     suspend fun insert (animals: Animals){
         animalsDao.insert(animals)
     }
-
 }

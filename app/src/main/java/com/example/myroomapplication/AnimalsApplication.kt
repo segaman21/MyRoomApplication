@@ -9,7 +9,7 @@ import kotlinx.coroutines.SupervisorJob
 
 class AnimalsApplication : Application() {
 
-    val viewModelFactory by lazy {AnimalsViewModelFactory(repository,sharedPreferences) }
+    val viewModelFactory by lazy { AnimalsViewModelFactory(repository, sharedPreferences) }
     private val sharedPreferences by lazy {
         SharedPreferenceStorage(
             PreferenceManager.getDefaultSharedPreferences(
@@ -18,5 +18,5 @@ class AnimalsApplication : Application() {
         )
     }
     val database by lazy { AnimalsRoomDatabase.getDatabase(this) }
-    val repository by lazy { AnimalsRepository(database.animalsDao()) }
+    private val repository by lazy { AnimalsRepository(database.animalsDao()) }
 }

@@ -2,6 +2,7 @@ package com.example.myroomapplication
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.myroomapplication.addNewAnimal.NewAnimalViewModel
 import com.example.myroomapplication.database.Animals
 import com.example.myroomapplication.preference.PreferenceStorage
 import kotlinx.coroutines.CoroutineScope
@@ -32,10 +33,6 @@ class AnimalsViewModel(
         }.asLiveData()
 
 
-    fun insert(animals: Animals) = viewModelScope.launch {
-        repository.insert(animals)
-    }
-
     fun delete() = scope.launch(Dispatchers.IO) {
         repository.delete()
     }
@@ -50,6 +47,10 @@ class AnimalsViewModelFactory(
         if (modelClass.isAssignableFrom(AnimalsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return AnimalsViewModel(repository, preferenceStorage) as T
+        }
+        if (modelClass.isAssignableFrom(NewAnimalViewModel::class.java)){
+            @Suppress("UNCHECKED_CAST")
+            return NewAnimalViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
