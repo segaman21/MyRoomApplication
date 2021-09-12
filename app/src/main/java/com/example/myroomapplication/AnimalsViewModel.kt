@@ -1,21 +1,36 @@
 package com.example.myroomapplication
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.myroomapplication.database.Animals
+import com.example.myroomapplication.preference.PreferenceStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
-class AnimalsViewModel(private val repository: AnimalsRepository) : ViewModel() {
+class AnimalsViewModel(
+    private val repository: AnimalsRepository,
+    preferenceStorage: PreferenceStorage
+) : ViewModel() {
 
-    private val scope= CoroutineScope(SupervisorJob())
+    private val scope = CoroutineScope(SupervisorJob())
 
-    val allAnimals: LiveData<List<Animals>> = repository.allAnimals.asLiveData()
+    val allAnimals: LiveData<List<Animals>> =
+        combine(
+            repository.allAnimals, preferenceStorage.observableAnimalOrderBy
+        ) { allAnimals, sorted ->
+            Log.d("tag", "$sorted")
+            when (sorted) {
+                "name" -> allAnimals.sortedBy { it.name }
+                "age" ->allAnimals.sortedBy { it.age.toInt() }
+                "breed" ->allAnimals.sortedBy { it.breed }
+                else->allAnimals
+            }
+        }.asLiveData()
 
-    val allByName: LiveData<List<Animals>> = repository.allByName.asLiveData()
-    val allByAge: LiveData<List<Animals>> = repository.allByAge.asLiveData()
-    val allByBreed: LiveData<List<Animals>> = repository.allByBreed.asLiveData()
 
     fun insert(animals: Animals) = viewModelScope.launch {
         repository.insert(animals)
@@ -26,12 +41,15 @@ class AnimalsViewModel(private val repository: AnimalsRepository) : ViewModel() 
     }
 }
 
-class AnimalsViewModelFactory(private val repository: AnimalsRepository) :
+class AnimalsViewModelFactory(
+    private val repository: AnimalsRepository,
+    private val preferenceStorage: PreferenceStorage
+) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AnimalsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return AnimalsViewModel(repository) as T
+            return AnimalsViewModel(repository, preferenceStorage) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

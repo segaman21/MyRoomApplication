@@ -18,11 +18,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
-    private var sorted: MutableLiveData<String>? = null
-    private var count=1
+    private var count = 1
     private val newAnimalRequestCode = 1
     private val animalsViewModel: AnimalsViewModel by viewModels {
-        AnimalsViewModelFactory((application as AnimalsApplication).repository)
+        ((application as AnimalsApplication).viewModelFactory)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = AnimalsListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+
 
         val button = findViewById<FloatingActionButton>(R.id.newAnimalButton)
         button.setOnClickListener {
@@ -40,8 +37,11 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, newAnimalRequestCode)
         }
 
-        animalsViewModel.allAnimals.observe(this, Observer { animals ->
-            animals.let { adapter.submitList(it) }
+        animalsViewModel.allAnimals.observe(this, Observer {
+            val adapter = AnimalsListAdapter(it)
+            recyclerView.layoutManager = LinearLayoutManager(this)
+            recyclerView.adapter = adapter
+
         })
 
         val deleteButton = findViewById<ImageView>(R.id.delete_button)
@@ -49,26 +49,12 @@ class MainActivity : AppCompatActivity() {
             animalsViewModel.delete()
         }
 
-        val sortedButton= findViewById<ImageView>(R.id.sorted_button)
-        sortedButton.setOnClickListener{
-           val settingsIntent = Intent(this, PreferenceActivity::class.java)
+        val sortedButton = findViewById<ImageView>(R.id.sorted_button)
+        sortedButton.setOnClickListener {
+            val settingsIntent = Intent(this, PreferenceActivity::class.java)
             startActivity(settingsIntent)
         }
     }
-
-//    override fun onResume() {
-//        val adapter = AnimalsListAdapter()
-//        val prefs=  PreferenceManager.getDefaultSharedPreferences(this)
-//        sorted?.value =prefs.getString("sorted","name")
-//
-//        when (sorted?.value){
-//            "name" ->
-//            "age" ->
-//            "breed" ->
-//
-//        }
-//        super.onResume()
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
