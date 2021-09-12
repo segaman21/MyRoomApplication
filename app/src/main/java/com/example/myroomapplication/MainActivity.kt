@@ -29,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-
+        val adapter = AnimalsListAdapter()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
         val button = findViewById<FloatingActionButton>(R.id.newAnimalButton)
         button.setOnClickListener {
@@ -37,11 +39,8 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, newAnimalRequestCode)
         }
 
-        animalsViewModel.allAnimals.observe(this, Observer {
-            val adapter = AnimalsListAdapter(it)
-            recyclerView.layoutManager = LinearLayoutManager(this)
-            recyclerView.adapter = adapter
-
+        animalsViewModel.allAnimals.observe(this, Observer { animals ->
+            animals.let { adapter.submitList(it) }
         })
 
         val deleteButton = findViewById<ImageView>(R.id.delete_button)
@@ -63,9 +62,9 @@ class MainActivity : AppCompatActivity() {
             var name = intentData?.getStringExtra(NewAnimalActivity.NAME)
             var age = intentData?.getStringExtra(NewAnimalActivity.AGE)
             var breed = intentData?.getStringExtra(NewAnimalActivity.BREED)
-            val animal = Animals(count, name!!, age!!, breed!!)
+            val animal = Animals(name=name!!, age=age!!, breed=breed!!)
             animalsViewModel.insert(animal)
-            count++
+
         } else {
             Toast.makeText(applicationContext, "Aminals is empty", Toast.LENGTH_LONG).show()
         }
