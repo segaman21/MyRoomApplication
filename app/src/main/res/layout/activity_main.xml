@@ -29,15 +29,6 @@
         tools:ignore="VectorDrawableCompat" />
 
     <ImageView
-        android:id="@+id/delete_button"
-        android:layout_width="@dimen/dim_60dp"
-        android:layout_height="@dimen/dim_60dp"
-        android:layout_margin="@dimen/dim_16dp"
-        android:src="@drawable/ic_baseline_delete_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
         android:id="@+id/sorted_button"
         android:layout_width="@dimen/dim_60dp"
         android:layout_height="@dimen/dim_60dp"
@@ -45,4 +36,5 @@
         android:src="@drawable/ic_baseline_sort_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/recyclerview" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

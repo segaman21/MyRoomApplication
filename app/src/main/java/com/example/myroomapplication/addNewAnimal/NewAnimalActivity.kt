@@ -16,11 +16,10 @@ class NewAnimalActivity : AppCompatActivity() {
     private val newAnimalViewModel: NewAnimalViewModel by viewModels {
         ((application as AnimalsApplication).viewModelFactory)
     }
-    private lateinit var binding: ActivityNewAnimalBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityNewAnimalBinding.inflate(layoutInflater)
+        val binding = ActivityNewAnimalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.addButton.setOnClickListener {

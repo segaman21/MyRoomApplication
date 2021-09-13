@@ -5,17 +5,14 @@ import androidx.lifecycle.*
 import com.example.myroomapplication.addNewAnimal.NewAnimalViewModel
 import com.example.myroomapplication.database.Animals
 import com.example.myroomapplication.preference.PreferenceStorage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.launch
 
 class AnimalsViewModel(
     private val repository: AnimalsRepository,
-    preferenceStorage: PreferenceStorage
-) : ViewModel() {
+    preferenceStorage: PreferenceStorage,
+) : ViewModel(){
 
     private val scope = CoroutineScope(SupervisorJob())
 
@@ -26,16 +23,16 @@ class AnimalsViewModel(
             Log.d("tag", "$sorted")
             when (sorted) {
                 "name" -> allAnimals.sortedBy { it.name }
-                "age" ->allAnimals.sortedBy { it.age.toInt() }
-                "breed" ->allAnimals.sortedBy { it.breed }
-                else->allAnimals
+                "age" -> allAnimals.sortedBy { it.age.toInt() }
+                "breed" -> allAnimals.sortedBy { it.breed }
+                else -> allAnimals
             }
         }.asLiveData()
 
-
-    fun delete() = scope.launch(Dispatchers.IO) {
-        repository.delete()
+   fun deleteChosen(id: Int) = scope.launch(Dispatchers.IO) {
+        repository.deleteChosen(id)
     }
+
 }
 
 class AnimalsViewModelFactory(
@@ -48,7 +45,7 @@ class AnimalsViewModelFactory(
             @Suppress("UNCHECKED_CAST")
             return AnimalsViewModel(repository, preferenceStorage) as T
         }
-        if (modelClass.isAssignableFrom(NewAnimalViewModel::class.java)){
+        if (modelClass.isAssignableFrom(NewAnimalViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return NewAnimalViewModel(repository) as T
         }

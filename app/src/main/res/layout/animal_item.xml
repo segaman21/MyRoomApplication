@@ -6,6 +6,25 @@
     android:layout_height="wrap_content"
     android:background="#c3ffd2">
 
+<!--    <ImageView-->
+<!--        android:id="@+id/update_chosen"-->
+<!--        android:layout_width="@dimen/dim_25dp"-->
+<!--        android:layout_height="@dimen/dim_25dp"-->
+<!--        android:layout_marginStart="@dimen/dim_30dp"-->
+<!--        android:src="@drawable/ic_baseline_update_24"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/age_desc"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <ImageView
+        android:id="@+id/delete_chosen"
+        android:layout_width="@dimen/dim_30dp"
+        android:layout_height="@dimen/dim_30dp"
+        android:layout_marginStart="@dimen/dim_60dp"
+        android:src="@drawable/ic_baseline_delete_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
