@@ -3,6 +3,8 @@
     <dimen name="dim_0dp">0dp</dimen>
     <dimen name="dim_3dp">3dp</dimen>
     <dimen name="dim_30dp">30dp</dimen>
+    <dimen name="dim_20dp">20dp</dimen>
+    <dimen name="dim_25dp">25dp</dimen>
     <dimen name="dim_16dp">16dp</dimen>
     <dimen name="dim_60dp">60dp</dimen>
     <dimen name="dim_200dp">200dp</dimen>

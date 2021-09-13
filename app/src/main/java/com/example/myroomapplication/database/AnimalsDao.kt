@@ -15,7 +15,7 @@ interface AnimalsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(animals: Animals)
 
-    @Query("DELETE FROM animals_table")
-    suspend fun deleteAll()
+    @Query("DELETE FROM animals_table WHERE id=:id")
+    suspend fun deleteChosen(id:Int)
 
 }

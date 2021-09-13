@@ -8,11 +8,11 @@ class AnimalsRepository(private val animalsDao: AnimalsDao) {
 
     val allAnimals: Flow<List<Animals>> = animalsDao.getAllWords()
 
-    suspend fun delete(){
-        animalsDao.deleteAll()
-    }
-
     suspend fun insert (animals: Animals){
         animalsDao.insert(animals)
+    }
+
+    suspend fun deleteChosen(id:Int){
+        animalsDao.deleteChosen(id)
     }
 }
