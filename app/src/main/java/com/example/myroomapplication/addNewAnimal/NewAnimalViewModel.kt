@@ -5,12 +5,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myroomapplication.AnimalsRepository
 import com.example.myroomapplication.database.Animals
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NewAnimalViewModel(private val repository: AnimalsRepository) : ViewModel() {
 
     fun insert(animals: Animals) = viewModelScope.launch {
         repository.insert(animals)
+    }
+
+    fun update(animals:Animals) = viewModelScope.launch {
+        repository.update(animals)
     }
 }
 

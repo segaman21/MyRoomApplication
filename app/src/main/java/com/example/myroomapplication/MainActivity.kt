@@ -7,12 +7,13 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myroomapplication.addNewAnimal.NewAnimalActivity
+import com.example.myroomapplication.addNewAnimal.UpdateAnimalActivity
 import com.example.myroomapplication.database.Animals
 import com.example.myroomapplication.databinding.ActivityMainBinding
 import com.example.myroomapplication.preference.PreferenceActivity
-import kotlinx.coroutines.Job
 
-class MainActivity() : AppCompatActivity() {
+
+class MainActivity() : AppCompatActivity(), AnimalsListener {
     private val animalsViewModel: AnimalsViewModel by viewModels {
         ((application as AnimalsApplication).viewModelFactory)
     }
@@ -22,7 +23,7 @@ class MainActivity() : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val animalAdapter = AnimalsListAdapter{animal -> adapterOnClick(animal)}
+        val animalAdapter = AnimalsListAdapter(this)
         binding.recyclerview.adapter = animalAdapter
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
         binding.newAnimalButton.setOnClickListener {
@@ -38,9 +39,24 @@ class MainActivity() : AppCompatActivity() {
             startActivity(settingsIntent)
         }
     }
-    private fun adapterOnClick(animal: Animals) {
-        animalsViewModel.deleteChosen(animal.id)
+
+    override fun delete(id: Int) {
+        animalsViewModel.deleteChosen(id)
     }
 
+    override fun update(animals: Animals) {
+        val intent = Intent(this, UpdateAnimalActivity::class.java)
+        intent.putExtra(OLD_ID, animals.id)
+        intent.putExtra(OLD_NAME, animals.name)
+        intent.putExtra(OLD_AGE, animals.age)
+        intent.putExtra(OLD_BREED, animals.breed)
+        startActivity(intent)
+    }
 
+    companion object {
+        const val OLD_ID = "ID"
+        const val OLD_NAME = "NAME"
+        const val OLD_AGE = "AGE"
+        const val OLD_BREED = "BREED"
+    }
 }

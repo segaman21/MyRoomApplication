@@ -1,9 +1,9 @@
 <resources>
-     <string-array name="animals">
-            <item>name</item>
-            <item>age</item>
-            <item>breed</item>
-        </string-array>
+    <string-array name="animals">
+        <item>name</item>
+        <item>age</item>
+        <item>breed</item>
+    </string-array>
     <string name="app_name">MyRoomApplication</string>
     <string name="add">Add</string>
     <string name="add_new_animal">Add new animal</string>
@@ -11,4 +11,6 @@
     <string name="age">Age: </string>
     <string name="breed">Breed: </string>
     <string name="empty_animal">Animal is empty</string>
+    <string name="update">UPDATE </string>
+    <string name="update_chosen">Update chosen animal </string>
 </resources>
