@@ -18,4 +18,7 @@ interface AnimalsDao {
     @Query("DELETE FROM animals_table WHERE id=:id")
     suspend fun deleteChosen(id:Int)
 
+    @Query("UPDATE animals_table SET name=:name,age=:age,breed=:breed WHERE id=:id")
+    suspend fun update(id:Int,name:String,age:String,breed:String)
+
 }

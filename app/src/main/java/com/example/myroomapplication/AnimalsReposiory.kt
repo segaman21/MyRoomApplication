@@ -15,4 +15,8 @@ class AnimalsRepository(private val animalsDao: AnimalsDao) {
     suspend fun deleteChosen(id:Int){
         animalsDao.deleteChosen(id)
     }
+
+    suspend fun update(animals: Animals){
+        animalsDao.update(animals.id,animals.name,animals.age,animals.breed)
+    }
 }

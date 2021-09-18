@@ -1,39 +1,45 @@
 package com.example.myroomapplication
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myroomapplication.addNewAnimal.NewAnimalActivity
 import com.example.myroomapplication.database.Animals
 import com.example.myroomapplication.databinding.AnimalItemBinding
-class AnimalsListAdapter(private val onClick: (Animals) -> Unit) :
+
+class AnimalsListAdapter(private val listener: AnimalsListener) :
     ListAdapter<Animals, AnimalsListAdapter.AnimalsViewHolder>(WORDS_COMPARATOR) {
 
-    class AnimalsViewHolder(private val binding: AnimalItemBinding,val onClick: (Animals) -> Unit) :
-        RecyclerView.ViewHolder(binding.root) {
-        private var currentAnimal: Animals? = null
+    class AnimalsViewHolder(
+        private val binding: AnimalItemBinding, private val listener: AnimalsListener
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
+
+        private fun initOnCLock(animals: Animals) {
             binding.deleteChosen.setOnClickListener {
-                currentAnimal?.let {
-                    onClick(it)
-                }
+                listener.delete(animals.id)
+            }
+            binding.updateChosen.setOnClickListener {
+                listener.update(animals)
             }
         }
 
         fun bind(animals: Animals) {
-            currentAnimal=animals
+            initOnCLock(animals)
             binding.nameDesc.text = animals.name
             binding.ageDesc.text = animals.age
             binding.breedDesc.text = animals.breed
-
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalsViewHolder {
         val itemBinding =
             AnimalItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AnimalsViewHolder(itemBinding,onClick)
+        return AnimalsViewHolder(itemBinding, listener)
     }
 
     override fun onBindViewHolder(holder: AnimalsViewHolder, position: Int) {

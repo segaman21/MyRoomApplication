@@ -12,24 +12,24 @@ import kotlinx.coroutines.flow.combine
 class AnimalsViewModel(
     private val repository: AnimalsRepository,
     preferenceStorage: PreferenceStorage,
-) : ViewModel(){
+) : ViewModel() {
 
     private val scope = CoroutineScope(SupervisorJob())
 
-    val allAnimals: LiveData<List<Animals>> =
-        combine(
-            repository.allAnimals, preferenceStorage.observableAnimalOrderBy
-        ) { allAnimals, sorted ->
-            Log.d("tag", "$sorted")
-            when (sorted) {
-                "name" -> allAnimals.sortedBy { it.name }
-                "age" -> allAnimals.sortedBy { it.age.toInt() }
-                "breed" -> allAnimals.sortedBy { it.breed }
-                else -> allAnimals
-            }
-        }.asLiveData()
+    val allAnimals: LiveData<List<Animals>> = combine(
+        repository.allAnimals,
+        preferenceStorage.observableAnimalOrderBy
+    ) { allAnimals, sorted ->
+        Log.d("tag", "$sorted")
+        when (sorted) {
+            "name" -> allAnimals.sortedBy { it.name }
+            "age" -> allAnimals.sortedBy { it.age.toInt() }
+            "breed" -> allAnimals.sortedBy { it.breed }
+            else -> allAnimals
+        }
+    }.asLiveData()
 
-   fun deleteChosen(id: Int) = scope.launch(Dispatchers.IO) {
+    fun deleteChosen(id: Int) = scope.launch(Dispatchers.IO) {
         repository.deleteChosen(id)
     }
 
@@ -38,16 +38,13 @@ class AnimalsViewModel(
 class AnimalsViewModelFactory(
     private val repository: AnimalsRepository,
     private val preferenceStorage: PreferenceStorage
-) :
-    ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AnimalsViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return AnimalsViewModel(repository, preferenceStorage) as T
+            @Suppress("UNCHECKED_CAST") return AnimalsViewModel(repository, preferenceStorage) as T
         }
         if (modelClass.isAssignableFrom(NewAnimalViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return NewAnimalViewModel(repository) as T
+            @Suppress("UNCHECKED_CAST") return NewAnimalViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
