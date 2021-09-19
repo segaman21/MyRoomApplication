@@ -1,38 +1,35 @@
 package com.example.myroomapplication
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myroomapplication.addNewAnimal.NewAnimalActivity
-import com.example.myroomapplication.database.Animals
+import com.example.myroomapplication.database.Animal
 import com.example.myroomapplication.databinding.AnimalItemBinding
 
 class AnimalsListAdapter(private val listener: AnimalsListener) :
-    ListAdapter<Animals, AnimalsListAdapter.AnimalsViewHolder>(WORDS_COMPARATOR) {
+    ListAdapter<Animal, AnimalsListAdapter.AnimalsViewHolder>(WORDS_COMPARATOR) {
 
     class AnimalsViewHolder(
         private val binding: AnimalItemBinding, private val listener: AnimalsListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
 
-        private fun initOnCLock(animals: Animals) {
+        private fun initOnCLock(animal: Animal) {
             binding.deleteChosen.setOnClickListener {
-                listener.delete(animals.id)
+                listener.delete(animal.id)
             }
             binding.updateChosen.setOnClickListener {
-                listener.update(animals)
+                listener.update(animal)
             }
         }
 
-        fun bind(animals: Animals) {
-            initOnCLock(animals)
-            binding.nameDesc.text = animals.name
-            binding.ageDesc.text = animals.age
-            binding.breedDesc.text = animals.breed
+        fun bind(animal: Animal) {
+            initOnCLock(animal)
+            binding.nameDesc.text = animal.name
+            binding.ageDesc.text = animal.age
+            binding.breedDesc.text = animal.breed
         }
     }
 
@@ -47,12 +44,12 @@ class AnimalsListAdapter(private val listener: AnimalsListener) :
     }
 
     companion object {
-        private val WORDS_COMPARATOR = object : DiffUtil.ItemCallback<Animals>() {
-            override fun areItemsTheSame(oldItem: Animals, newItem: Animals): Boolean {
+        private val WORDS_COMPARATOR = object : DiffUtil.ItemCallback<Animal>() {
+            override fun areItemsTheSame(oldItem: Animal, newItem: Animal): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Animals, newItem: Animals): Boolean {
+            override fun areContentsTheSame(oldItem: Animal, newItem: Animal): Boolean {
                 return oldItem == newItem
             }
         }

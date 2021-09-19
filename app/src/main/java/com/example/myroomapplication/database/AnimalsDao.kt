@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.Flow
 interface AnimalsDao {
 
     @Query("SELECT * FROM animals_table")
-    fun getAllWords(): Flow<List<Animals>>
+    fun getAllAnimals(): Flow<List<Animal>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(animals: Animals)
+    suspend fun insert(animal: Animal)
 
     @Query("DELETE FROM animals_table WHERE id=:id")
     suspend fun deleteChosen(id:Int)

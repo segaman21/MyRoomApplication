@@ -8,13 +8,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myroomapplication.addNewAnimal.NewAnimalActivity
 import com.example.myroomapplication.addNewAnimal.UpdateAnimalActivity
-import com.example.myroomapplication.database.Animals
+import com.example.myroomapplication.database.Animal
 import com.example.myroomapplication.databinding.ActivityMainBinding
 import com.example.myroomapplication.preference.PreferenceActivity
 
 
 class MainActivity() : AppCompatActivity(), AnimalsListener {
-    private val animalsViewModel: AnimalsViewModel by viewModels {
+    private val allAnimalsViewModel: AllAnimalsViewModel by viewModels {
         ((application as AnimalsApplication).viewModelFactory)
     }
 
@@ -30,7 +30,7 @@ class MainActivity() : AppCompatActivity(), AnimalsListener {
             val intent = Intent(this, NewAnimalActivity::class.java)
             startActivity(intent)
         }
-        animalsViewModel.allAnimals.observe(this, Observer { animals ->
+        allAnimalsViewModel.allAnimals.observe(this, Observer { animals ->
             animals.let { animalAdapter.submitList(it) }
         })
 
@@ -41,22 +41,11 @@ class MainActivity() : AppCompatActivity(), AnimalsListener {
     }
 
     override fun delete(id: Int) {
-        animalsViewModel.deleteChosen(id)
+        allAnimalsViewModel.deleteChosen(id)
     }
 
-    override fun update(animals: Animals) {
-        val intent = Intent(this, UpdateAnimalActivity::class.java)
-        intent.putExtra(OLD_ID, animals.id)
-        intent.putExtra(OLD_NAME, animals.name)
-        intent.putExtra(OLD_AGE, animals.age)
-        intent.putExtra(OLD_BREED, animals.breed)
-        startActivity(intent)
+    override fun update(animal: Animal) {
+        startActivity(UpdateAnimalActivity.createIntent(this, animal))
     }
 
-    companion object {
-        const val OLD_ID = "ID"
-        const val OLD_NAME = "NAME"
-        const val OLD_AGE = "AGE"
-        const val OLD_BREED = "BREED"
-    }
 }

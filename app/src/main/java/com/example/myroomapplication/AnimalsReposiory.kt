@@ -1,22 +1,22 @@
 package com.example.myroomapplication
 
-import com.example.myroomapplication.database.Animals
+import com.example.myroomapplication.database.Animal
 import com.example.myroomapplication.database.AnimalsDao
 import kotlinx.coroutines.flow.Flow
 
 class AnimalsRepository(private val animalsDao: AnimalsDao) {
 
-    val allAnimals: Flow<List<Animals>> = animalsDao.getAllWords()
+    var allAnimals: Flow<List<Animal>> = animalsDao.getAllAnimals()
 
-    suspend fun insert (animals: Animals){
-        animalsDao.insert(animals)
+    suspend fun insert (animal: Animal){
+        animalsDao.insert(animal)
     }
 
     suspend fun deleteChosen(id:Int){
         animalsDao.deleteChosen(id)
     }
 
-    suspend fun update(animals: Animals){
-        animalsDao.update(animals.id,animals.name,animals.age,animals.breed)
+    suspend fun update(animal: Animal){
+        animalsDao.update(animal.id,animal.name,animal.age,animal.breed)
     }
 }
