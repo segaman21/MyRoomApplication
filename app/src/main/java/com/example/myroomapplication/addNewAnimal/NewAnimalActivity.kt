@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import com.example.myroomapplication.AnimalsApplication
 import com.example.myroomapplication.MainActivity
 import com.example.myroomapplication.R
-import com.example.myroomapplication.database.Animals
+import com.example.myroomapplication.database.Animal
 import com.example.myroomapplication.databinding.ActivityNewAnimalBinding
 
 class NewAnimalActivity : AppCompatActivity() {
@@ -32,7 +32,7 @@ class NewAnimalActivity : AppCompatActivity() {
                 val name = binding.editName.text.toString()
                 val age = binding.editAge.text.toString()
                 val breed = binding.editBreed.text.toString()
-                val animal = Animals(name = name, age = age, breed = breed)
+                val animal = Animal(name = name, age = age, breed = breed)
                 newAnimalViewModel.insert(animal)
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)

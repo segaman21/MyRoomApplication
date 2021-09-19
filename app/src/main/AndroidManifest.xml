@@ -10,16 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyRoomApplication">
-        <activity android:name=".preference.PreferenceActivity" />
         <activity
-            android:name=".addNewAnimal.NewAnimalActivity"
-            android:exported="true" />
-        <activity
-            android:name=".addNewAnimal.UpdateAnimalActivity"
-            android:exported="true"/>
+            android:name=".preference.PreferenceActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".addNewAnimal.NewAnimalActivity" />
+        <activity android:name=".addNewAnimal.UpdateAnimalActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
 
 
             <intent-filter>
