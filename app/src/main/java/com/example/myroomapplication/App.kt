@@ -2,11 +2,12 @@ package com.example.myroomapplication
 
 import android.app.Application
 import androidx.preference.PreferenceManager
+import com.example.myroomapplication.data.AnimalsRepository
 import com.example.myroomapplication.data.AnimalsRoomDatabase
 import com.example.myroomapplication.preference.SharedPreferenceStorage
 import com.example.myroomapplication.ui.animalsList.AnimalsViewModelFactory
 
-class Aap : Application() {
+class App : Application() {
 
     val viewModelFactory by lazy { AnimalsViewModelFactory(repository, sharedPreferences) }
     private val sharedPreferences by lazy {

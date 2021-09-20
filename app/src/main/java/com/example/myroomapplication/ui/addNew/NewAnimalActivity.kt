@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.example.myroomapplication.Aap
+import com.example.myroomapplication.App
 import com.example.myroomapplication.MainActivity
 import com.example.myroomapplication.R
 import com.example.myroomapplication.data.Animal
@@ -14,7 +14,7 @@ import com.example.myroomapplication.databinding.ActivityNewAnimalBinding
 
 class NewAnimalActivity : AppCompatActivity() {
     private val newAnimalViewModel: NewAnimalViewModel by viewModels {
-        ((application as Aap).viewModelFactory)
+        ((application as App).viewModelFactory)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
