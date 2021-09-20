@@ -1,7 +1,7 @@
 package com.example.myroomapplication
 
-import com.example.myroomapplication.database.Animal
-import com.example.myroomapplication.database.AnimalsDao
+import com.example.myroomapplication.data.Animal
+import com.example.myroomapplication.data.AnimalsDao
 import kotlinx.coroutines.flow.Flow
 
 class AnimalsRepository(private val animalsDao: AnimalsDao) {

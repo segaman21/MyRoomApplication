@@ -1,9 +1,10 @@
-package com.example.myroomapplication
+package com.example.myroomapplication.ui.animalsList
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.myroomapplication.addNewAnimal.NewAnimalViewModel
-import com.example.myroomapplication.database.Animal
+import com.example.myroomapplication.AnimalsRepository
+import com.example.myroomapplication.ui.addNew.NewAnimalViewModel
+import com.example.myroomapplication.data.Animal
 import com.example.myroomapplication.preference.PreferenceStorage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.combine
