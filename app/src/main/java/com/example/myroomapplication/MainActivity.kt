@@ -17,7 +17,7 @@ import com.example.myroomapplication.ui.animalsList.AnimalsListAdapter
 
 class MainActivity() : AppCompatActivity(), AnimalsListener {
     private val allAnimalsViewModel: AllAnimalsViewModel by viewModels {
-        ((application as Aap).viewModelFactory)
+        ((application as App).viewModelFactory)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

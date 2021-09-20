@@ -2,7 +2,7 @@ package com.example.myroomapplication.ui.addNew
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myroomapplication.AnimalsRepository
+import com.example.myroomapplication.data.AnimalsRepository
 import com.example.myroomapplication.data.Animal
 import kotlinx.coroutines.launch
 

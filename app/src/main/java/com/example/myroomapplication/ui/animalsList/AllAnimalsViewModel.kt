@@ -2,7 +2,7 @@ package com.example.myroomapplication.ui.animalsList
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.myroomapplication.AnimalsRepository
+import com.example.myroomapplication.data.AnimalsRepository
 import com.example.myroomapplication.ui.addNew.NewAnimalViewModel
 import com.example.myroomapplication.data.Animal
 import com.example.myroomapplication.preference.PreferenceStorage
