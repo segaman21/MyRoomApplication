@@ -1,6 +1,6 @@
 package com.example.myroomapplication
 
-import com.example.myroomapplication.database.Animal
+import com.example.myroomapplication.data.Animal
 
 interface AnimalsListener {
     fun delete(id:Int)

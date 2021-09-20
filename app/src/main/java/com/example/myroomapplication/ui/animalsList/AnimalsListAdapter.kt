@@ -1,11 +1,12 @@
-package com.example.myroomapplication
+package com.example.myroomapplication.ui.animalsList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myroomapplication.database.Animal
+import com.example.myroomapplication.AnimalsListener
+import com.example.myroomapplication.data.Animal
 import com.example.myroomapplication.databinding.AnimalItemBinding
 
 class AnimalsListAdapter(private val listener: AnimalsListener) :

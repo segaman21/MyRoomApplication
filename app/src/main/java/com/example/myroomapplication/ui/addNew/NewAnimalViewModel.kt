@@ -1,9 +1,9 @@
-package com.example.myroomapplication.addNewAnimal
+package com.example.myroomapplication.ui.addNew
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myroomapplication.AnimalsRepository
-import com.example.myroomapplication.database.Animal
+import com.example.myroomapplication.data.Animal
 import kotlinx.coroutines.launch
 
 class NewAnimalViewModel(private val repository: AnimalsRepository) : ViewModel() {
